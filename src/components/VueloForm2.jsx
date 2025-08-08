@@ -17,12 +17,12 @@ export default function VueloForm() {
   const [tiempoVolado, setTiempoVolado] = useState(0)
 
   const handleChange = (e) => {
-    const { name, value, type } = e.target;
+    const { name, value, type } = e.target
     setForm({
       ...form,
-      [name]: type === 'number' ? parseInt(value, 10) || 0 : value
-    });
-  };
+      [name]: type === 'number' ? parseInt(value, 10) || 0 : value,
+    })
+  }
 
   useEffect(() => {
     if (form.despegue && form.aterrizaje) {
@@ -40,11 +40,11 @@ export default function VueloForm() {
     e.preventDefault()
 
     const formatoFecha = (fecha) => {
-      const d = new Date(fecha);
-      const dia = d.getDate().toString().padStart(2, '0');
-      const mes = (d.getMonth() + 1).toString().padStart(2, '0');
-      const anio = d.getFullYear();
-      return `${dia}/${mes}/${anio}`;
+      const d = new Date(fecha)
+      const dia = d.getDate().toString().padStart(2, '0')
+      const mes = (d.getMonth() + 1).toString().padStart(2, '0')
+      const anio = d.getFullYear()
+      return `${dia}/${mes}/${anio}`
     }
 
     try {
@@ -102,7 +102,9 @@ export default function VueloForm() {
         <option value="">Elige Instructor</option>
         <option value="Sin instructor">Sin instructor</option>
         <option value="Fabian Mateos">Fabian Mateos</option>
-        <option value="Floro Adriano De Benedetto">Floro Adriano De Benedetto</option>
+        <option value="Floro Adriano De Benedetto">
+          Floro Adriano De Benedetto
+        </option>
         <option value="Gabriel Dominguez">Gabriel Dominguez</option>
         <option value="Lucas Torres">Lucas Torres</option>
       </select>
