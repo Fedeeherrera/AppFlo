@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import FuelForm from './FuelForm'
 import FlightsForm from './FlightsForm'
+import CSS from '../styles/Tabs.module.scss'
 
 export default function Tabs() {
   const [tab, setTab] = useState('fuel')
@@ -10,11 +11,7 @@ export default function Tabs() {
       <div className="flex gap-4 mb-4">
         <button
           onClick={() => setTab('fuel')}
-          className={`flex items-center gap-2 px-4 py-2 bg-rose-500 text-white rounded-lg hover:bg-rose-800 transition ${
-            tab === 'fuel'
-              ? 'ring-4 ring-black font-bold shadow-lg scale-105'
-              : ''
-          }`}
+          className={`flex items-center gap-2 px-4 py-2 bg-rose-500 text-white rounded-lg hover:bg-rose-800 ${tab === 'fuel' ? CSS.active : ''}`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -29,11 +26,7 @@ export default function Tabs() {
 
         <button
           onClick={() => setTab('flight')}
-          className={`flex min-w-8 items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition ${
-            tab === 'flight'
-              ? 'ring-4 ring-black font-bold shadow-lg scale-105'
-              : ''
-          }`}
+          className={`flex min-w-8 items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 ${tab === 'flight' ? CSS.active : ''}`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
