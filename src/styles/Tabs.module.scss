@@ -2,7 +2,26 @@
   outline: 4px solid black;
 }
 
-.divColFlex {
+.tabsContainer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 300px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.tabsContainer2 {
+  display: flex;
+  gap: 2em;
+}
+
+@media screen and (width < 400px) {
+  .tabsContainer2 {
+    flex-direction: column;
+  }
+
+  button {
+    width: 200px;
+  }
 }

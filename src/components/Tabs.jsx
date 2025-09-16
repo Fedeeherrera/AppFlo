@@ -2,8 +2,8 @@ import CSS from '../styles/Tabs.module.scss'
 
 export default function Tabs({tab, setTab}) {
   return (
-    <div className="p-4 divColFlex">
-      <div className="flex gap-4 mb-4 divColFlex">
+    <div className={`${CSS.tabsContainer}`}>
+      <div className={`${CSS.tabsContainer2}`}>
         <button
           onClick={() => setTab('fuel')}
           className={`flex items-center gap-2 px-4 py-2 bg-rose-500 text-white rounded-lg hover:bg-rose-800 ${tab === 'fuel' ? CSS.active : ''}`}
