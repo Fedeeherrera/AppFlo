@@ -1,11 +1,6 @@
-import { useState } from 'react'
-import FuelForm from './FuelForm'
-import FlightsForm from './FlightsForm'
 import CSS from '../styles/Tabs.module.scss'
 
-export default function Tabs() {
-  const [tab, setTab] = useState('fuel')
-
+export default function Tabs({tab, setTab}) {
   return (
     <div className="p-4">
       <div className="flex gap-4 mb-4">
@@ -45,8 +40,6 @@ export default function Tabs() {
           Vuelos
         </button>
       </div>
-      {tab === 'fuel' && <FuelForm />}
-      {tab === 'flight' && <FlightsForm />}
     </div>
   )
 }
