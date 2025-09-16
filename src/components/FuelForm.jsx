@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import { supabase } from '../data/supabaseClient'
+import Swal from 'sweetalert2'
 
 const fuelSchema = Yup.object().shape({
   fecha: Yup.date().required('La fecha es obligatoria'),
@@ -30,12 +31,22 @@ const FuelForm = () => {
             ])
 
             if (error) throw error
-
-            alert('Carga registrada con éxito ✅')
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Carga registrada con éxito ✅',
+              showConfirmButton: false,
+              timer: 1200,
+            })
             resetForm()
           } catch (err) {
             console.error('Error guardando carga:', err.message)
-            alert('Hubo un error al registrar la carga ⚠️')
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              showConfirmButton: false,
+              text: 'Hubo un error al registrar la carga ⚠️',
+            })
           }
         }}
       >

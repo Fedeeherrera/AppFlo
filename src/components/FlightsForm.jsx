@@ -1,20 +1,21 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { supabase } from "../data/supabaseClient"; 
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import { supabase } from '../data/supabaseClient'
+import Swal from 'sweetalert2'
 
 const vueloSchema = Yup.object().shape({
-  fecha: Yup.date().required("La fecha es obligatoria"),
-  avion: Yup.string().required("El avión es obligatorio"),
-  piloto: Yup.string().required("El piloto es obligatorio"),
-  tipoVuelo: Yup.string().required("El tipo de vuelo es obligatorio"),
-  horaDespegue: Yup.string().required("La hora de despegue es obligatoria"),
-  horaAterrizaje: Yup.string().required("La hora de aterrizaje es obligatoria"),
+  fecha: Yup.date().required('La fecha es obligatoria'),
+  avion: Yup.string().required('El avión es obligatorio'),
+  piloto: Yup.string().required('El piloto es obligatorio'),
+  tipoVuelo: Yup.string().required('El tipo de vuelo es obligatorio'),
+  horaDespegue: Yup.string().required('La hora de despegue es obligatoria'),
+  horaAterrizaje: Yup.string().required('La hora de aterrizaje es obligatoria'),
   cantidadAterrizajes: Yup.number()
-    .min(0, "Debe ser un número positivo")
-    .required("La cantidad de aterrizajes es obligatoria"),
-  comienzoVuelo: Yup.string().required("El comienzo del vuelo es obligatorio"),
-  finalizarVuelo: Yup.string().required("El final del vuelo es obligatorio"),
-});
+    .min(0, 'Debe ser un número positivo')
+    .required('La cantidad de aterrizajes es obligatoria'),
+  comienzoVuelo: Yup.string().required('El comienzo del vuelo es obligatorio'),
+  finalizarVuelo: Yup.string().required('El final del vuelo es obligatorio'),
+})
 
 export default function FlightsForm() {
   return (
@@ -23,23 +24,23 @@ export default function FlightsForm() {
 
       <Formik
         initialValues={{
-          fecha: "",
-          avion: "",
-          piloto: "",
-          tipoVuelo: "",
-          horaDespegue: "",
-          horaAterrizaje: "",
-          cantidadAterrizajes: "",
-          comienzoVuelo: "",
-          finalizarVuelo: "",
+          fecha: '',
+          avion: '',
+          piloto: '',
+          tipoVuelo: '',
+          horaDespegue: '',
+          horaAterrizaje: '',
+          cantidadAterrizajes: '',
+          comienzoVuelo: '',
+          finalizarVuelo: '',
         }}
         validationSchema={vueloSchema}
         onSubmit={async (values, { resetForm }) => {
           try {
-            const { error } = await supabase.from("flight_records").insert([
+            const { error } = await supabase.from('flight_records').insert([
               {
                 fecha: values.fecha,
-                avion:values.avion,
+                avion: values.avion,
                 piloto: values.piloto,
                 tipoVuelo: values.tipoVuelo,
                 horaDespegue: values.horaDespegue,
@@ -48,13 +49,24 @@ export default function FlightsForm() {
                 comienzoVuelo: values.comienzoVuelo,
                 finalizarVuelo: values.finalizarVuelo,
               },
-            ]);
-            if (error) throw error;
-            alert("Vuelo registrado con éxito ✅");
-            resetForm();
+            ])
+            if (error) throw error
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Vuelo Registrado Con Exito ✅',
+              showConfirmButton: false,
+              timer: 1200,
+            })
+            resetForm()
           } catch (err) {
-            console.error("Error guardando vuelo:", err.message);
-            alert("Hubo un error al registrar el vuelo ⚠️");
+            console.error('Error guardando vuelo:', err.message)
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              showConfirmButton: false,
+              text: 'Hubo un error al registrar el vuelo ⚠️',
+            })
           }
         }}
       >
@@ -62,7 +74,9 @@ export default function FlightsForm() {
           <Form className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Fecha del vuelo */}
             <div>
-              <label className="block text-sm font-medium">Fecha del vuelo</label>
+              <label className="block text-sm font-medium">
+                Fecha del vuelo
+              </label>
               <Field
                 type="date"
                 name="fecha"
@@ -160,7 +174,9 @@ export default function FlightsForm() {
 
             {/* Hora de aterrizaje */}
             <div>
-              <label className="block text-sm font-medium">Hora Aterrizaje</label>
+              <label className="block text-sm font-medium">
+                Hora Aterrizaje
+              </label>
               <Field
                 type="time"
                 name="horaAterrizaje"
@@ -192,7 +208,9 @@ export default function FlightsForm() {
 
             {/* Finalizar vuelo */}
             <div>
-              <label className="block text-sm font-medium">Finalizar Vuelo</label>
+              <label className="block text-sm font-medium">
+                Finalizar Vuelo
+              </label>
               <Field
                 name="finalizarVuelo"
                 className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
@@ -212,12 +230,12 @@ export default function FlightsForm() {
                 disabled={isSubmitting}
                 className="w-full bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 px-4 rounded-md"
               >
-                {isSubmitting ? "Guardando..." : "Registrar Vuelo"}
+                {isSubmitting ? 'Guardando...' : 'Registrar Vuelo'}
               </button>
             </div>
           </Form>
         )}
       </Formik>
     </div>
-  );
+  )
 }
