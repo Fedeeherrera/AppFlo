@@ -1,7 +1,7 @@
-# ✈️ Aeroclub Manager
+# ✈️ App FLO
 
 ## 📌 Introducción  
-**Aeroclub Manager** es una aplicación web que permite gestionar de forma sencilla y eficiente la **carga de combustible** y el **registro de vuelos** de un aeroclub.  
+**App FLO** es una aplicación web que permite gestionar de forma sencilla y eficiente la **carga de combustible** y el **registro de vuelos** de un aeroclub.  
 Está pensada para pilotos y administradores, brindando control en tiempo real de las operaciones diarias.
 
 ## 📑 Tabla de Contenido  
@@ -12,7 +12,7 @@ Está pensada para pilotos y administradores, brindando control en tiempo real d
 - [Desafíos y tecnologías](#-desafíos-y-tecnologías)  
 
 ## ⚡ Características principales  
-- Registro de vuelos con: fecha, avión, piloto, horas voladas y observaciones.  
+- Registro de vuelos con: Piloto, Avion, Tipo de vuelo, Hora Despuesgue, Hora aterrizaje, Cantidad de aterrizajes, Despegue en, Aterriza en.
 - Registro de cargas de combustible con: fecha, piloto y litros cargados.  
 - Sistema de autenticación con **roles** (usuarios y administradores).  
 - Historial de vuelos y cargas accesible desde el panel.  
@@ -22,8 +22,8 @@ Está pensada para pilotos y administradores, brindando control en tiempo real d
 Clona el repositorio e instala las dependencias:  
 
 ```bash
-git clone https://github.com/tuusuario/aeroclub-manager.git
-cd aeroclub-manager
+git clone https://github.com/[UsuarioGitHub]/AppFlo.git
+cd AppFlo
 npm install
 ```
 
