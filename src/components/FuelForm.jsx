@@ -1,16 +1,15 @@
-"use client";
-
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import { supabase } from '../supabaseClient' // ajusta la ruta si hace falta
 
 const fuelSchema = Yup.object().shape({
-  fecha: Yup.date().required("La fecha es obligatoria"),
+  fecha: Yup.date().required('La fecha es obligatoria'),
   litros: Yup.number()
-    .typeError("Debe ser un número")
-    .positive("Debe ser mayor a 0")
-    .required("Los litros son obligatorios"),
-  encargado: Yup.string().required("El encargado es obligatorio"),
-});
+    .typeError('Debe ser un número')
+    .positive('Debe ser mayor a 0')
+    .required('Los litros son obligatorios'),
+  encargado: Yup.string().required('El encargado es obligatorio'),
+})
 
 const FuelForm = () => {
   return (
@@ -18,11 +17,26 @@ const FuelForm = () => {
       <h2 className="text-xl font-bold mb-4">Carga de Combustible</h2>
 
       <Formik
-        initialValues={{ fecha: "", litros: "", encargado: "" }}
+        initialValues={{ fecha: '', litros: '', encargado: '' }}
         validationSchema={fuelSchema}
-        onSubmit={(values, { resetForm }) => {
-          console.log("Datos de carga:", values);
-          resetForm();
+        onSubmit={async (values, { resetForm }) => {
+          try {
+            const { error } = await supabase.from('fuel_records').insert([
+              {
+                fecha: values.fecha, // enviar directamente la fecha
+                litros: Number(values.litros), // convertir a número
+                encargado: values.encargado,
+              },
+            ])
+
+            if (error) throw error
+
+            alert('Carga registrada con éxito ✅')
+            resetForm()
+          } catch (err) {
+            console.error('Error guardando carga:', err.message)
+            alert('Hubo un error al registrar la carga ⚠️')
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -89,13 +103,13 @@ const FuelForm = () => {
               disabled={isSubmitting}
               className="w-full bg-blue-600 hover:bg-blue-700 py-2 rounded-md font-medium transition-colors"
             >
-              Registrar carga
+              {isSubmitting ? 'Guardando...' : 'Registrar carga'}
             </button>
           </Form>
         )}
       </Formik>
     </div>
-  );
-};
+  )
+}
 
-export default FuelForm;
+export default FuelForm

@@ -12,7 +12,7 @@ function App() {
       <Header />
       <main className="flex-grow flex items-center justify-center px-4 py-6 w-full ">
         <div className="w-full max-w-md border-4 rounded-xl flex flex-col items-center p-5 bg-slate-400">
-          <Tabs tab={tab} setTab={setTab} />
+          <Tabs tab={tab} setTab={setTab}/>
           {tab === 'fuel' && <FuelForm />}
           {tab === 'flight' && <FlightsForm />}
         </div>

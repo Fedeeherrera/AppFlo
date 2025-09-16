@@ -1,7 +1,6 @@
-"use client";
-
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { supabase } from "../supabaseClient"; // Ajusta la ruta si tu archivo está en otro directorio
 
 const vueloSchema = Yup.object().shape({
   avion: Yup.string().required("El avión es obligatorio"),
@@ -33,8 +32,27 @@ export default function FlightsForm() {
           finalizarVuelo: "",
         }}
         validationSchema={vueloSchema}
-        onSubmit={(values) => {
-          console.log("Datos enviados:", values);
+        onSubmit={async (values, { resetForm }) => {
+          try {
+            const { error } = await supabase.from("flight_records").insert([
+              {
+                // avion no está en la base, lo puedes guardar en otro campo si quieres, pero lo ignoro aquí
+                piloto: values.piloto,
+                tipoVuelo: values.tipoVuelo,
+                horaDespegue: values.horaDespegue,
+                horaAterrizaje: values.horaAterrizaje,
+                cantidadAterrizajes: Number(values.cantidadAterrizajes),
+                comienzoVuelo: values.comienzoVuelo,
+                finalizarVuelo: values.finalizarVuelo,
+              },
+            ]);
+            if (error) throw error;
+            alert("Vuelo registrado con éxito ✅");
+            resetForm();
+          } catch (err) {
+            console.error("Error guardando vuelo:", err.message);
+            alert("Hubo un error al registrar el vuelo ⚠️");
+          }
         }}
       >
         {({ isSubmitting }) => (
