@@ -45,7 +45,7 @@ Levanta la aplicación compilada:
 npm start
 ```
 
-> ⚠️ Antes de ejecutar la aplicación, crea un archivo `.env.local` en la raíz con las credenciales de Firebase o Supabase.  
+> ⚠️ Antes de ejecutar la aplicación, crea un archivo `.env` en la raíz con las credenciales de Supabase.  
 
 ## 🚀 Cómo usarlo  
 1. Inicia sesión con tu usuario o regístrate.  
