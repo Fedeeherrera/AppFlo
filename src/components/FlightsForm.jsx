@@ -1,8 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { supabase } from "../supabaseClient"; // Ajusta la ruta si tu archivo está en otro directorio
+import { supabase } from "../data/supabaseClient"; 
 
 const vueloSchema = Yup.object().shape({
+  fecha: Yup.date().required("La fecha es obligatoria"),
   avion: Yup.string().required("El avión es obligatorio"),
   piloto: Yup.string().required("El piloto es obligatorio"),
   tipoVuelo: Yup.string().required("El tipo de vuelo es obligatorio"),
@@ -22,6 +23,7 @@ export default function FlightsForm() {
 
       <Formik
         initialValues={{
+          fecha: "",
           avion: "",
           piloto: "",
           tipoVuelo: "",
@@ -36,6 +38,7 @@ export default function FlightsForm() {
           try {
             const { error } = await supabase.from("flight_records").insert([
               {
+                fecha: values.fecha,
                 // avion no está en la base, lo puedes guardar en otro campo si quieres, pero lo ignoro aquí
                 piloto: values.piloto,
                 tipoVuelo: values.tipoVuelo,
@@ -57,6 +60,21 @@ export default function FlightsForm() {
       >
         {({ isSubmitting }) => (
           <Form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Fecha del vuelo */}
+            <div>
+              <label className="block text-sm font-medium">Fecha del vuelo</label>
+              <Field
+                type="date"
+                name="fecha"
+                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
+              />
+              <ErrorMessage
+                name="fecha"
+                component="div"
+                className="text-red-400 text-sm"
+              />
+            </div>
+
             {/* Avión */}
             <div>
               <label className="block text-sm font-medium">Avión</label>

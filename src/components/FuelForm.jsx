@@ -1,6 +1,6 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
-import { supabase } from '../supabaseClient' // ajusta la ruta si hace falta
+import { supabase } from '../data/supabaseClient'
 
 const fuelSchema = Yup.object().shape({
   fecha: Yup.date().required('La fecha es obligatoria'),
