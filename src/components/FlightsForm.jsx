@@ -39,7 +39,7 @@ export default function FlightsForm() {
             const { error } = await supabase.from("flight_records").insert([
               {
                 fecha: values.fecha,
-                // avion no está en la base, lo puedes guardar en otro campo si quieres, pero lo ignoro aquí
+                avion:values.avion,
                 piloto: values.piloto,
                 tipoVuelo: values.tipoVuelo,
                 horaDespegue: values.horaDespegue,

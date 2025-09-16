@@ -4,6 +4,8 @@ import FlightsForm from './components/FlightsForm'
 import {useState} from 'react'
 import Footer from './components/Footer'
 import Tabs from './components/Tabs'
+import LoadedFlights from './components/LoadedFlights'
+import LoadedFuel from './components/LoadedFuel'
 
 function App() {
   const [tab, setTab] = useState('fuel')
@@ -15,6 +17,10 @@ function App() {
           <Tabs tab={tab} setTab={setTab}/>
           {tab === 'fuel' && <FuelForm />}
           {tab === 'flight' && <FlightsForm />}
+        </div>
+        <div>
+          {tab === 'fuel' && <LoadedFuel />}
+          {tab === 'flight' && <LoadedFlights />}
         </div>
       </main>
       <Footer />
