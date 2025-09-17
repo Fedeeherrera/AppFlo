@@ -14,7 +14,7 @@ const fuelSchema = Yup.object().shape({
 
 const FuelForm = () => {
   return (
-    <div className="mx-auto w-full mt-10 bg-gray-900 text-white shadow-lg rounded-2xl p-8">
+    <div className="w-full mx-auto mt-10 text-white rounded-2xl p-2">
       <h2 className="text-xl font-bold mb-4">Carga de Combustible</h2>
 
       <Formik

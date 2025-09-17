@@ -19,7 +19,7 @@ const vueloSchema = Yup.object().shape({
 
 export default function FlightsForm() {
   return (
-    <div className="w-full mx-auto mt-10 bg-gray-900 text-white shadow-lg rounded-2xl p-8">
+    <div className="w-full mx-auto mt-10 text-white rounded-2xl p-2">
       <h2 className="text-xl font-bold mb-6">Registrar Vuelo</h2>
 
       <Formik
@@ -93,10 +93,16 @@ export default function FlightsForm() {
             <div>
               <label className="block text-sm font-medium">Avión</label>
               <Field
+              as='select'
                 name="avion"
                 className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
                 placeholder="Ej: LV-ABC"
-              />
+              >
+                                <option value="">Seleccionar...</option>
+                <option value="lvncu">LV-NCU</option>
+                <option value="lvyge">LV-YGE</option>
+                <option value="lviwc">LV-IWC</option>
+                 </Field>
               <ErrorMessage
                 name="avion"
                 component="div"
