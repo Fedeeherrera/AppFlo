@@ -1,43 +1,49 @@
-import { Formik, Form, Field, ErrorMessage } from 'formik'
-import * as Yup from 'yup'
-import { supabase } from '../data/supabaseClient'
-import Swal from 'sweetalert2'
+import { Formik, Form, Field, ErrorMessage } from "formik"
+import * as Yup from "yup"
+import { supabase } from "../data/supabaseClient"
+import Swal from "sweetalert2"
+import { Plane, Clock, User, MapPin, Hash } from "lucide-react"
 
 const vueloSchema = Yup.object().shape({
-  fecha: Yup.date().required('La fecha es obligatoria'),
-  avion: Yup.string().required('El avión es obligatorio'),
-  piloto: Yup.string().required('El piloto es obligatorio'),
-  tipoVuelo: Yup.string().required('El tipo de vuelo es obligatorio'),
-  horaDespegue: Yup.string().required('La hora de despegue es obligatoria'),
-  horaAterrizaje: Yup.string().required('La hora de aterrizaje es obligatoria'),
+  fecha: Yup.date().required("La fecha es obligatoria"),
+  avion: Yup.string().required("El avión es obligatorio"),
+  piloto: Yup.string().required("El piloto es obligatorio"),
+  tipoVuelo: Yup.string().required("El tipo de vuelo es obligatorio"),
+  horaDespegue: Yup.string().required("La hora de despegue es obligatoria"),
+  horaAterrizaje: Yup.string().required("La hora de aterrizaje es obligatoria"),
   cantidadAterrizajes: Yup.number()
-    .min(0, 'Debe ser un número positivo')
-    .required('La cantidad de aterrizajes es obligatoria'),
-  comienzoVuelo: Yup.string().required('El comienzo del vuelo es obligatorio'),
-  finalizarVuelo: Yup.string().required('El final del vuelo es obligatorio'),
+    .min(0, "Debe ser un número positivo")
+    .required("La cantidad de aterrizajes es obligatoria"),
+  comienzoVuelo: Yup.string().required("El comienzo del vuelo es obligatorio"),
+  finalizarVuelo: Yup.string().required("El final del vuelo es obligatorio"),
 })
 
 export default function FlightsForm() {
   return (
-    <div className="w-full mx-auto mt-10 text-white rounded-2xl p-2">
-      <h2 className="text-xl font-bold mb-6">Registrar Vuelo</h2>
+    <div className="w-full mx-auto bg-card rounded-xl p-6 shadow-lg animate-slide-in-up">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="p-2 bg-primary/10 rounded-lg">
+          <Plane className="w-6 h-6 text-primary" />
+        </div>
+        <h2 className="text-2xl font-bold text-foreground">Registrar Vuelo</h2>
+      </div>
 
       <Formik
         initialValues={{
-          fecha: '',
-          avion: '',
-          piloto: '',
-          tipoVuelo: '',
-          horaDespegue: '',
-          horaAterrizaje: '',
-          cantidadAterrizajes: '',
-          comienzoVuelo: '',
-          finalizarVuelo: '',
+          fecha: "",
+          avion: "",
+          piloto: "",
+          tipoVuelo: "",
+          horaDespegue: "",
+          horaAterrizaje: "",
+          cantidadAterrizajes: "",
+          comienzoVuelo: "",
+          finalizarVuelo: "",
         }}
         validationSchema={vueloSchema}
         onSubmit={async (values, { resetForm }) => {
           try {
-            const { error } = await supabase.from('flight_records').insert([
+            const { error } = await supabase.from("flight_records").insert([
               {
                 fecha: values.fecha,
                 avion: values.avion,
@@ -52,20 +58,21 @@ export default function FlightsForm() {
             ])
             if (error) throw error
             Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Vuelo Registrado Con Exito ✅',
+              position: "top-end",
+              icon: "success",
+              title: "Vuelo Registrado Con Éxito ✈️",
               showConfirmButton: false,
-              timer: 1200,
+              timer: 1500,
             })
             resetForm()
           } catch (err) {
-            console.error('Error guardando vuelo:', err.message)
+            console.error("Error guardando vuelo:", err.message)
             Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
+              icon: "error",
+              title: "Error",
               showConfirmButton: false,
-              text: 'Hubo un error al registrar el vuelo ⚠️',
+              text: "Hubo un error al registrar el vuelo",
+              timer: 2000,
             })
           }
         }}
@@ -73,170 +80,162 @@ export default function FlightsForm() {
         {({ isSubmitting }) => (
           <Form className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Fecha del vuelo */}
-            <div>
-              <label className="block text-sm font-medium">
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Clock className="w-4 h-4" />
                 Fecha del vuelo
               </label>
               <Field
                 type="date"
                 name="fecha"
-                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
               />
-              <ErrorMessage
-                name="fecha"
-                component="div"
-                className="text-red-400 text-sm"
-              />
+              <ErrorMessage name="fecha" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
             {/* Avión */}
-            <div>
-              <label className="block text-sm font-medium">Avión</label>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Plane className="w-4 h-4" />
+                Avión
+              </label>
               <Field
-              as='select'
+                as="select"
                 name="avion"
-                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
-                placeholder="Ej: LV-ABC"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
               >
-                                <option value="">Seleccionar...</option>
+                <option value="">Seleccionar avión...</option>
                 <option value="lvncu">LV-NCU</option>
                 <option value="lvyge">LV-YGE</option>
                 <option value="lviwc">LV-IWC</option>
-                 </Field>
-              <ErrorMessage
-                name="avion"
-                component="div"
-                className="text-red-400 text-sm"
-              />
+              </Field>
+              <ErrorMessage name="avion" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
             {/* Piloto */}
-            <div>
-              <label className="block text-sm font-medium">Piloto</label>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <User className="w-4 h-4" />
+                Piloto
+              </label>
               <Field
                 name="piloto"
-                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
                 placeholder="Nombre del piloto"
               />
-              <ErrorMessage
-                name="piloto"
-                component="div"
-                className="text-red-400 text-sm"
-              />
+              <ErrorMessage name="piloto" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
             {/* Tipo de vuelo */}
-            <div>
-              <label className="block text-sm font-medium">Tipo de Vuelo</label>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Hash className="w-4 h-4" />
+                Tipo de Vuelo
+              </label>
               <Field
                 as="select"
                 name="tipoVuelo"
-                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
               >
-                <option value="">Seleccionar...</option>
+                <option value="">Seleccionar tipo...</option>
                 <option value="instruccion">Instrucción</option>
                 <option value="recreativo">Recreativo</option>
                 <option value="traslado">Traslado</option>
               </Field>
-              <ErrorMessage
-                name="tipoVuelo"
-                component="div"
-                className="text-red-400 text-sm"
-              />
-            </div>
-
-            {/* Cantidad de aterrizajes */}
-            <div>
-              <label className="block text-sm font-medium">
-                Cantidad de Aterrizajes
-              </label>
-              <Field
-                type="number"
-                name="cantidadAterrizajes"
-                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
-                placeholder="Ej: 2"
-              />
-              <ErrorMessage
-                name="cantidadAterrizajes"
-                component="div"
-                className="text-red-400 text-sm"
-              />
+              <ErrorMessage name="tipoVuelo" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
             {/* Hora de despegue */}
-            <div>
-              <label className="block text-sm font-medium">Hora Despegue</label>
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Clock className="w-4 h-4" />
+                Hora Despegue
+              </label>
               <Field
                 type="time"
                 name="horaDespegue"
-                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
               />
-              <ErrorMessage
-                name="horaDespegue"
-                component="div"
-                className="text-red-400 text-sm"
-              />
+              <ErrorMessage name="horaDespegue" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
             {/* Hora de aterrizaje */}
-            <div>
-              <label className="block text-sm font-medium">
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Clock className="w-4 h-4" />
                 Hora Aterrizaje
               </label>
               <Field
                 type="time"
                 name="horaAterrizaje"
-                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+              />
+              <ErrorMessage name="horaAterrizaje" component="div" className="text-destructive text-sm font-medium" />
+            </div>
+
+            {/* Cantidad de aterrizajes */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Hash className="w-4 h-4" />
+                Cantidad de Aterrizajes
+              </label>
+              <Field
+                type="number"
+                name="cantidadAterrizajes"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                placeholder="Ej: 2"
+                min="0"
               />
               <ErrorMessage
-                name="horaAterrizaje"
+                name="cantidadAterrizajes"
                 component="div"
-                className="text-red-400 text-sm"
+                className="text-destructive text-sm font-medium"
               />
             </div>
 
             {/* Comienzo vuelo */}
-            <div>
-              <label className="block text-sm font-medium">
-                Comienzo del Vuelo
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <MapPin className="w-4 h-4" />
+                Aeródromo de Origen
               </label>
               <Field
                 name="comienzoVuelo"
-                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
-                placeholder="Ej: Ezeiza"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                placeholder="Ej: Ezeiza (SAEZ)"
               />
-              <ErrorMessage
-                name="comienzoVuelo"
-                component="div"
-                className="text-red-400 text-sm"
-              />
+              <ErrorMessage name="comienzoVuelo" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
             {/* Finalizar vuelo */}
-            <div>
-              <label className="block text-sm font-medium">
-                Finalizar Vuelo
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <MapPin className="w-4 h-4" />
+                Aeródromo de Destino
               </label>
               <Field
                 name="finalizarVuelo"
-                className="mt-1 block w-full rounded-md border border-gray-700 bg-gray-800 p-2 text-white focus:ring-2 focus:ring-blue-500"
-                placeholder="Ej: San Fernando"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                placeholder="Ej: San Fernando (SADF)"
               />
-              <ErrorMessage
-                name="finalizarVuelo"
-                component="div"
-                className="text-red-400 text-sm"
-              />
+              <ErrorMessage name="finalizarVuelo" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
-            {/* Botón enviar en full width */}
-            <div className="md:col-span-2">
+            {/* Botón enviar */}
+            <div className="md:col-span-2 pt-4">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-600 hover:bg-blue-700 transition text-white font-semibold py-2 px-4 rounded-md"
+                className={`bg-sky-600 w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg`}
               >
-                {isSubmitting ? 'Guardando...' : 'Registrar Vuelo'}
+                {isSubmitting ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <div className=" w-4 h-4 border-2 border-primary-foreground/30 border-t-primary-foreground rounded-full animate-spin"></div>
+                    Guardando...
+                  </span>
+                ) : (
+                  "Registrar Vuelo"
+                )}
               </button>
             </div>
           </Form>
