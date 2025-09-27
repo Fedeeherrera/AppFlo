@@ -1,16 +1,20 @@
-import { Formik, Form, Field, ErrorMessage } from "formik"
-import * as Yup from "yup"
-import { supabase } from "../data/supabaseClient"
-import Swal from "sweetalert2"
-import { Fuel, Calendar, Droplets, User } from "lucide-react"
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import { supabase } from '../data/supabaseClient'
+import Swal from 'sweetalert2'
+import { Fuel, Calendar, Droplets, User, Plane } from 'lucide-react'
 
 const fuelSchema = Yup.object().shape({
-  fecha: Yup.date().required("La fecha es obligatoria"),
+  fecha: Yup.date().required('La fecha es obligatoria'),
   litros: Yup.number()
-    .typeError("Debe ser un número")
-    .positive("Debe ser mayor a 0")
-    .required("Los litros son obligatorios"),
-  encargado: Yup.string().required("El encargado es obligatorio"),
+    .typeError('Debe ser un número')
+    .positive('Debe ser mayor a 0')
+    .required('Los litros son obligatorios'),
+  encargado: Yup.string().required('El encargado es obligatorio'),
+  lecturaSurtidor: Yup.number()
+    .typeError('Debe ser un número')
+    .positive('Debe ser mayor a 0')
+    .required('La lectura es obligatoria')
 })
 
 const FuelForm = () => {
@@ -20,38 +24,41 @@ const FuelForm = () => {
         <div className="p-2 bg-accent/10 rounded-lg">
           <Fuel className="w-6 h-6 text-accent" />
         </div>
-        <h2 className="text-2xl font-bold text-foreground">Carga de Combustible</h2>
+        <h2 className="text-2xl font-bold text-foreground">
+          Carga de Combustible
+        </h2>
       </div>
 
       <Formik
-        initialValues={{ fecha: "", litros: "", encargado: "" }}
+        initialValues={{ fecha: '', litros: '', encargado: '', lecturaSurtidor:0 }}
         validationSchema={fuelSchema}
         onSubmit={async (values, { resetForm }) => {
           try {
-            const { error } = await supabase.from("fuel_records").insert([
+            const { error } = await supabase.from('fuel_records').insert([
               {
                 fecha: values.fecha,
                 litros: Number(values.litros),
                 encargado: values.encargado,
+                lecturaSurtidor:values.lecturaSurtidor
               },
             ])
 
             if (error) throw error
             Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Carga registrada con éxito ⛽",
+              position: 'top-end',
+              icon: 'success',
+              title: 'Carga registrada con éxito ⛽',
               showConfirmButton: false,
               timer: 1500,
             })
             resetForm()
           } catch (err) {
-            console.error("Error guardando carga:", err.message)
+            console.error('Error guardando carga:', err.message)
             Swal.fire({
-              icon: "error",
-              title: "Error",
+              icon: 'error',
+              title: 'Error',
               showConfirmButton: false,
-              text: "Hubo un error al registrar la carga",
+              text: 'Hubo un error al registrar la carga',
               timer: 2000,
             })
           }
@@ -70,7 +77,11 @@ const FuelForm = () => {
                 name="fecha"
                 className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
               />
-              <ErrorMessage name="fecha" component="div" className="text-destructive text-sm font-medium" />
+              <ErrorMessage
+                name="fecha"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
             </div>
 
             {/* Litros */}
@@ -87,7 +98,31 @@ const FuelForm = () => {
                 min="0"
                 step="0.1"
               />
-              <ErrorMessage name="litros" component="div" className="text-destructive text-sm font-medium" />
+              <ErrorMessage
+                name="litros"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
+            </div>
+            {/* Lectura Surtidor */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Fuel className="w-4 h-4" />
+                Lectura Surtidor
+              </label>
+              <Field
+                type="number"
+                name="lecturaSurtidor"
+                placeholder="Ej: 120"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                min="0"
+                step="0.1"
+              />
+              <ErrorMessage
+                name="lecturaSurtidor"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
             </div>
 
             {/* Encargado */}
@@ -102,7 +137,11 @@ const FuelForm = () => {
                 placeholder="Nombre del encargado"
                 className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
               />
-              <ErrorMessage name="encargado" component="div" className="text-destructive text-sm font-medium" />
+              <ErrorMessage
+                name="encargado"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
             </div>
 
             {/* Botón */}
@@ -118,7 +157,7 @@ const FuelForm = () => {
                     Guardando...
                   </span>
                 ) : (
-                  "Registrar Carga"
+                  'Registrar Carga'
                 )}
               </button>
             </div>
