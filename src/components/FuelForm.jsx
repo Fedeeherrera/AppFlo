@@ -14,7 +14,8 @@ const fuelSchema = Yup.object().shape({
   lecturaSurtidor: Yup.number()
     .typeError('Debe ser un número')
     .positive('Debe ser mayor a 0')
-    .required('La lectura es obligatoria')
+    .required('La lectura es obligatoria'),
+  avion: Yup.string().required('El avión es obligatorio'),
 })
 
 const FuelForm = () => {
@@ -30,7 +31,13 @@ const FuelForm = () => {
       </div>
 
       <Formik
-        initialValues={{ fecha: '', litros: '', encargado: '', lecturaSurtidor:0 }}
+        initialValues={{
+          fecha: '',
+          litros: '',
+          encargado: '',
+          lecturaSurtidor: 0,
+          avion: "",
+        }}
         validationSchema={fuelSchema}
         onSubmit={async (values, { resetForm }) => {
           try {
@@ -39,7 +46,8 @@ const FuelForm = () => {
                 fecha: values.fecha,
                 litros: Number(values.litros),
                 encargado: values.encargado,
-                lecturaSurtidor:values.lecturaSurtidor
+                lecturaSurtidor: values.lecturaSurtidor,
+                avion: values.avion,
               },
             ])
 
@@ -82,6 +90,25 @@ const FuelForm = () => {
                 component="div"
                 className="text-destructive text-sm font-medium"
               />
+            </div>
+
+            {/* Avion */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Plane className="w-4 h-4" />
+                Avión
+              </label>
+              <Field
+                as="select"
+                name="avion"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+              >
+                <option value="">Seleccionar avión...</option>
+                <option value="lvncu">LV-NCU</option>
+                <option value="lvyge">LV-YGE</option>
+                <option value="lviwc">LV-IWC</option>
+              </Field>
+              <ErrorMessage name="avion" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
             {/* Litros */}
