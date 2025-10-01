@@ -1,22 +1,22 @@
-import { Formik, Form, Field, ErrorMessage } from "formik"
-import * as Yup from "yup"
-import { supabase } from "../data/supabaseClient"
-import Swal from "sweetalert2"
-import { Plane, Clock, User, MapPin, Hash } from "lucide-react"
+import { Formik, Form, Field, ErrorMessage } from 'formik'
+import * as Yup from 'yup'
+import { supabase } from '../data/supabaseClient'
+import Swal from 'sweetalert2'
+import { Plane, Clock, User, MapPin, Hash } from 'lucide-react'
 
 const vueloSchema = Yup.object().shape({
-  fecha: Yup.date().required("La fecha es obligatoria"),
-  avion: Yup.string().required("El avión es obligatorio"),
-  piloto: Yup.string().required("El piloto es obligatorio"),
-  instructor: Yup.string().required("El Instructor es obligatorio"),
-  tipoVuelo: Yup.string().required("El tipo de vuelo es obligatorio"),
-  horaDespegue: Yup.string().required("La hora de despegue es obligatoria"),
-  horaAterrizaje: Yup.string().required("La hora de aterrizaje es obligatoria"),
+  fecha: Yup.date().required('La fecha es obligatoria'),
+  avion: Yup.string().required('El avión es obligatorio'),
+  piloto: Yup.string().required('El piloto es obligatorio'),
+  instructor: Yup.string().required('El Instructor es obligatorio'),
+  tipoVuelo: Yup.string().required('El tipo de vuelo es obligatorio'),
+  horaDespegue: Yup.string().required('La hora de despegue es obligatoria'),
+  horaAterrizaje: Yup.string().required('La hora de aterrizaje es obligatoria'),
   cantidadAterrizajes: Yup.number()
-    .min(0, "Debe ser un número positivo")
-    .required("La cantidad de aterrizajes es obligatoria"),
-  comienzoVuelo: Yup.string().required("El comienzo del vuelo es obligatorio"),
-  finalizarVuelo: Yup.string().required("El final del vuelo es obligatorio"),
+    .min(0, 'Debe ser un número positivo')
+    .required('La cantidad de aterrizajes es obligatoria'),
+  comienzoVuelo: Yup.string().required('El comienzo del vuelo es obligatorio'),
+  finalizarVuelo: Yup.string().required('El final del vuelo es obligatorio'),
 })
 
 export default function FlightsForm() {
@@ -31,21 +31,21 @@ export default function FlightsForm() {
 
       <Formik
         initialValues={{
-          fecha: "",
-          avion: "",
-          piloto: "",
-          instructor: "",
-          tipoVuelo: "",
-          horaDespegue: "",
-          horaAterrizaje: "",
-          cantidadAterrizajes: "",
-          comienzoVuelo: "",
-          finalizarVuelo: "",
+          fecha: '',
+          avion: '',
+          piloto: '',
+          instructor: '',
+          tipoVuelo: '',
+          horaDespegue: '',
+          horaAterrizaje: '',
+          cantidadAterrizajes: '',
+          comienzoVuelo: '',
+          finalizarVuelo: '',
         }}
         validationSchema={vueloSchema}
         onSubmit={async (values, { resetForm }) => {
           try {
-            const { error } = await supabase.from("flight_records").insert([
+            const { error } = await supabase.from('flight_records').insert([
               {
                 fecha: values.fecha,
                 avion: values.avion,
@@ -61,20 +61,20 @@ export default function FlightsForm() {
             ])
             if (error) throw error
             Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Vuelo Registrado Con Éxito ✈️",
+              position: 'top-end',
+              icon: 'success',
+              title: 'Vuelo Registrado Con Éxito ✈️',
               showConfirmButton: false,
               timer: 1500,
             })
             resetForm()
           } catch (err) {
-            console.error("Error guardando vuelo:", err.message)
+            console.error('Error guardando vuelo:', err.message)
             Swal.fire({
-              icon: "error",
-              title: "Error",
+              icon: 'error',
+              title: 'Error',
               showConfirmButton: false,
-              text: "Hubo un error al registrar el vuelo",
+              text: 'Hubo un error al registrar el vuelo',
               timer: 2000,
             })
           }
@@ -93,7 +93,11 @@ export default function FlightsForm() {
                 name="fecha"
                 className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
               />
-              <ErrorMessage name="fecha" component="div" className="text-destructive text-sm font-medium" />
+              <ErrorMessage
+                name="fecha"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
             </div>
 
             {/* Avión */}
@@ -112,7 +116,11 @@ export default function FlightsForm() {
                 <option value="LV-YGE">LV-YGE</option>
                 <option value="LV-IWC">LV-IWC</option>
               </Field>
-              <ErrorMessage name="avion" component="div" className="text-destructive text-sm font-medium" />
+              <ErrorMessage
+                name="avion"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
             </div>
 
             {/* Piloto */}
@@ -126,7 +134,11 @@ export default function FlightsForm() {
                 className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
                 placeholder="Nombre del piloto"
               />
-              <ErrorMessage name="piloto" component="div" className="text-destructive text-sm font-medium" />
+              <ErrorMessage
+                name="piloto"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
             </div>
 
             {/* Instructor */}
@@ -144,11 +156,53 @@ export default function FlightsForm() {
                 <option value="Sin Instructor">Sin instructor</option>
                 <option value="Alejandro Borges">Alejandro Borges</option>
                 <option value="Daniel Santos">Daniel Santos</option>
-                <option value="Adriano De Benedetto">Adriano De Benedetto</option>
+                <option value="Adriano De Benedetto">
+                  Adriano De Benedetto
+                </option>
                 <option value="Lucas Torres">Lucas Torres</option>
                 <option value="Gabriel Domínguez">Gabriel Domínguez</option>
               </Field>
-              <ErrorMessage name="instructor" component="div" className="text-destructive text-sm font-medium" />
+              <ErrorMessage
+                name="instructor"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
+            </div>
+
+            {/* Hora de despegue */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Clock className="w-4 h-4" />
+                Hora Despegue
+              </label>
+              <Field
+                type="time"
+                name="horaDespegue"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+              />
+              <ErrorMessage
+                name="horaDespegue"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
+            </div>
+
+            {/* Hora de aterrizaje */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <Clock className="w-4 h-4" />
+                Hora Aterrizaje
+              </label>
+              <Field
+                type="time"
+                name="horaAterrizaje"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+              />
+              <ErrorMessage
+                name="horaAterrizaje"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
             </div>
 
             {/* Tipo de vuelo */}
@@ -167,35 +221,11 @@ export default function FlightsForm() {
                 <option value="recreativo">Recreativo</option>
                 <option value="traslado">Traslado</option>
               </Field>
-              <ErrorMessage name="tipoVuelo" component="div" className="text-destructive text-sm font-medium" />
-            </div>
-
-            {/* Hora de despegue */}
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
-                <Clock className="w-4 h-4" />
-                Hora Despegue
-              </label>
-              <Field
-                type="time"
-                name="horaDespegue"
-                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+              <ErrorMessage
+                name="tipoVuelo"
+                component="div"
+                className="text-destructive text-sm font-medium"
               />
-              <ErrorMessage name="horaDespegue" component="div" className="text-destructive text-sm font-medium" />
-            </div>
-
-            {/* Hora de aterrizaje */}
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
-                <Clock className="w-4 h-4" />
-                Hora Aterrizaje
-              </label>
-              <Field
-                type="time"
-                name="horaAterrizaje"
-                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
-              />
-              <ErrorMessage name="horaAterrizaje" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
             {/* Cantidad de aterrizajes */}
@@ -229,7 +259,11 @@ export default function FlightsForm() {
                 className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
                 placeholder="Ej: Ezeiza (SAEZ)"
               />
-              <ErrorMessage name="comienzoVuelo" component="div" className="text-destructive text-sm font-medium" />
+              <ErrorMessage
+                name="comienzoVuelo"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
             </div>
 
             {/* Finalizar vuelo */}
@@ -243,7 +277,11 @@ export default function FlightsForm() {
                 className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
                 placeholder="Ej: San Fernando (SADF)"
               />
-              <ErrorMessage name="finalizarVuelo" component="div" className="text-destructive text-sm font-medium" />
+              <ErrorMessage
+                name="finalizarVuelo"
+                component="div"
+                className="text-destructive text-sm font-medium"
+              />
             </div>
 
             {/* Botón enviar */}
@@ -259,7 +297,7 @@ export default function FlightsForm() {
                     Guardando...
                   </span>
                 ) : (
-                  "Registrar Vuelo"
+                  'Registrar Vuelo'
                 )}
               </button>
             </div>
