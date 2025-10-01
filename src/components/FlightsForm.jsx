@@ -8,6 +8,7 @@ const vueloSchema = Yup.object().shape({
   fecha: Yup.date().required("La fecha es obligatoria"),
   avion: Yup.string().required("El avión es obligatorio"),
   piloto: Yup.string().required("El piloto es obligatorio"),
+  instructor: Yup.string().required("El Instructor es obligatorio"),
   tipoVuelo: Yup.string().required("El tipo de vuelo es obligatorio"),
   horaDespegue: Yup.string().required("La hora de despegue es obligatoria"),
   horaAterrizaje: Yup.string().required("La hora de aterrizaje es obligatoria"),
@@ -33,6 +34,7 @@ export default function FlightsForm() {
           fecha: "",
           avion: "",
           piloto: "",
+          instructor: "",
           tipoVuelo: "",
           horaDespegue: "",
           horaAterrizaje: "",
@@ -48,6 +50,7 @@ export default function FlightsForm() {
                 fecha: values.fecha,
                 avion: values.avion,
                 piloto: values.piloto,
+                instructor: values.instructor,
                 tipoVuelo: values.tipoVuelo,
                 horaDespegue: values.horaDespegue,
                 horaAterrizaje: values.horaAterrizaje,
@@ -105,9 +108,9 @@ export default function FlightsForm() {
                 className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
               >
                 <option value="">Seleccionar avión...</option>
-                <option value="lvncu">LV-NCU</option>
-                <option value="lvyge">LV-YGE</option>
-                <option value="lviwc">LV-IWC</option>
+                <option value="LV-NCU">LV-NCU</option>
+                <option value="LV-YGE">LV-YGE</option>
+                <option value="LV-IWC">LV-IWC</option>
               </Field>
               <ErrorMessage name="avion" component="div" className="text-destructive text-sm font-medium" />
             </div>
@@ -124,6 +127,28 @@ export default function FlightsForm() {
                 placeholder="Nombre del piloto"
               />
               <ErrorMessage name="piloto" component="div" className="text-destructive text-sm font-medium" />
+            </div>
+
+            {/* Instructor */}
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 text-sm font-semibold text-card-foreground">
+                <User className="w-4 h-4" />
+                Instructor
+              </label>
+              <Field
+                as="select"
+                name="instructor"
+                className="w-full px-4 py-3 rounded-lg border border-border bg-input text-foreground focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+              >
+                <option value="">Seleccionar Instructor...</option>
+                <option value="Sin Instructor">Sin instructor</option>
+                <option value="Alejandro Borges">Alejandro Borges</option>
+                <option value="Daniel Santos">Daniel Santos</option>
+                <option value="Adriano De Benedetto">Adriano De Benedetto</option>
+                <option value="Lucas Torres">Lucas Torres</option>
+                <option value="Gabriel Domínguez">Gabriel Domínguez</option>
+              </Field>
+              <ErrorMessage name="instructor" component="div" className="text-destructive text-sm font-medium" />
             </div>
 
             {/* Tipo de vuelo */}
