@@ -14,6 +14,7 @@ import {
   ArrowDown,
   X,
   FileText,
+  Plane,
 } from "lucide-react"
 
 const LoadedFuel = ({ formatDate }) => {
@@ -77,7 +78,7 @@ const LoadedFuel = ({ formatDate }) => {
         if (sortConfig.key === "fecha" || sortConfig.key === "fechaDeCreacion") {
           aValue = new Date(aValue)
           bValue = new Date(bValue)
-        } else if (sortConfig.key === "litros") {
+        } else if (sortConfig.key === "litros" || sortConfig.key === "lecturaSurtidor") {
           aValue = Number.parseFloat(aValue)
           bValue = Number.parseFloat(bValue)
         }
@@ -100,12 +101,12 @@ const LoadedFuel = ({ formatDate }) => {
   }
 
   const exportToCSV = (dataToExport = filteredRecords) => {
-    const headers = ["Fecha", "Litros", "Encargado", "Fecha Creación"]
+    const headers = ["Fecha", "Avión", "Litros", "Lectura Surtidor", "Encargado", "Fecha Creación"]
 
     const csvContent = [
       headers.join(","),
       ...dataToExport.map((record) =>
-        [formatDate(record.fecha), record.litros, record.encargado, formatDate(record.fechaDeCreacion)].join(","),
+        [formatDate(record.fecha), record.avion, record.litros, record.lecturaSurtidor, record.encargado, formatDate(record.fechaDeCreacion)].join(","),
       ),
     ].join("\n")
 
@@ -329,12 +330,32 @@ const LoadedFuel = ({ formatDate }) => {
                 </th>
                 <th className="px-6 py-4 text-left">
                   <button
+                    onClick={() => handleSort("avion")}
+                    className="flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-cyan-600 transition-colors"
+                  >
+                    <Plane className="w-4 h-4" />
+                    Avión
+                    {getSortIcon("avion")}
+                  </button>
+                </th>
+                <th className="px-6 py-4 text-left">
+                  <button
                     onClick={() => handleSort("litros")}
                     className="flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-cyan-600 transition-colors"
                   >
                     <Fuel className="w-4 h-4" />
                     Litros
                     {getSortIcon("litros")}
+                  </button>
+                </th>
+                <th className="px-6 py-4 text-left">
+                  <button
+                    onClick={() => handleSort("lecturaSurtidor")}
+                    className="flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-cyan-600 transition-colors"
+                  >
+                    <Fuel className="w-4 h-4" />
+                    Lectura Surtidor
+                    {getSortIcon("lecturaSurtidor")}
                   </button>
                 </th>
                 <th className="px-6 py-4 text-left">
@@ -368,10 +389,16 @@ const LoadedFuel = ({ formatDate }) => {
                 >
                   <td className="px-6 py-4 text-sm text-slate-900 font-medium">{formatDate(record.fecha)}</td>
                   <td className="px-6 py-4">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                      {record.avion}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
                     <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-cyan-100 text-cyan-800">
                       {record.litros}L
                     </span>
                   </td>
+                  <td className="px-6 py-4 text-sm text-slate-700">{record.lecturaSurtidor}</td>
                   <td className="px-6 py-4 text-sm text-slate-700">{record.encargado}</td>
                   <td className="px-6 py-4 text-sm text-slate-500">{formatDate(record.fechaDeCreacion)}</td>
                 </tr>

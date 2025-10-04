@@ -102,6 +102,7 @@ const LoadedFlights = ({ formatDate }) => {
       "Fecha",
       "Avión",
       "Piloto",
+      "Instructor",
       "Tipo de Vuelo",
       "Hora Despegue",
       "Hora Aterrizaje",
@@ -118,6 +119,7 @@ const LoadedFlights = ({ formatDate }) => {
           formatDate(flight.fecha),
           flight.avion,
           flight.piloto,
+          flight.instructor,
           flight.tipoVuelo,
           flight.horaDespegue,
           flight.horaAterrizaje,
@@ -369,6 +371,16 @@ const LoadedFlights = ({ formatDate }) => {
                 </th>
                 <th className="px-4 py-4 text-left">
                   <button
+                    onClick={() => handleSort("instructor")}
+                    className="flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-pink-600 transition-colors"
+                  >
+                    <User className="w-4 h-4" />
+                    Instructor
+                    {getSortIcon("instructor")}
+                  </button>
+                </th>
+                <th className="px-4 py-4 text-left">
+                  <button
                     onClick={() => handleSort("tipoVuelo")}
                     className="flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-pink-600 transition-colors"
                   >
@@ -435,6 +447,7 @@ const LoadedFlights = ({ formatDate }) => {
                     </span>
                   </td>
                   <td className="px-4 py-4 text-sm text-slate-700">{flight.piloto}</td>
+                  <td className="px-4 py-4 text-sm text-slate-700">{flight.instructor}</td>
                   <td className="px-4 py-4">
                     <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-pink-100 text-pink-800">
                       {flight.tipoVuelo}
