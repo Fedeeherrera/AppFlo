@@ -210,7 +210,7 @@ const LoadedFlights = ({ formatDate }) => {
   }
 
   return (
-    <div className="mt-8">
+    <div className="mt-8 px-2 sm:px-0">
       <DataHeader
         icon={Plane}
         title="Registros de Vuelos"
@@ -299,16 +299,16 @@ const LoadedFlights = ({ formatDate }) => {
             onChange={(e) => setExportDateRange({ ...exportDateRange, fin: e.target.value })}
             focusColor="focus:ring-pink-500"
           />
-          <div className="flex gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <button
               onClick={closeExportModal}
-              className="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors"
+              className="px-4 py-2 border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors order-2 sm:order-1"
             >
               Cancelar
             </button>
             <button
               onClick={handleExportWithDateRange}
-              className="flex-1 px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
+              className="px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors order-1 sm:order-2"
             >
               Exportar
             </button>
