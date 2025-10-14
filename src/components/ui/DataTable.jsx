@@ -12,9 +12,9 @@ const DataTable = ({
   const getSortIcon = (columnKey) => {
     if (sortConfig.key !== columnKey) return <ArrowUpDown className="w-4 h-4 opacity-50" />
     return sortConfig.direction === "asc" ? (
-      <ArrowUp className="w-4 h-4 text-primary" />
+      <ArrowUp className="w-4 h-4 text-pink-600" />
     ) : (
-      <ArrowDown className="w-4 h-4 text-primary" />
+      <ArrowDown className="w-4 h-4 text-pink-600" />
     )
   }
 
@@ -29,7 +29,7 @@ const DataTable = ({
                   {column.sortable ? (
                     <button
                       onClick={() => onSort(column.key)}
-                      className="flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-primary transition-colors"
+                      className="flex items-center gap-2 text-sm font-semibold text-slate-700 hover:text-pink-600 transition-colors"
                     >
                       {column.icon && <column.icon className="w-4 h-4" />}
                       {column.title}

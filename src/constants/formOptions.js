@@ -20,7 +20,7 @@ export const FLIGHT_TYPE_OPTIONS = [
 ]
 
 export const FUEL_AIRCRAFT_OPTIONS = [
-  { value: 'lvncu', label: 'LV-NCU' },
-  { value: 'lvyge', label: 'LV-YGE' },
-  { value: 'lviwc', label: 'LV-IWC' }
+  { value: 'LV-NCU', label: 'LV-NCU' },
+  { value: 'LV-YGE', label: 'LV-YGE' },
+  { value: 'LV-IWC', label: 'LV-IWC' }
 ]
