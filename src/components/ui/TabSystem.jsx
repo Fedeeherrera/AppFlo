@@ -9,7 +9,7 @@ const TabSystem = ({
 }) => {
   return (
     <div className={`flex justify-center ${containerClassName}`}>
-      <div className={`flex gap-3 ${className}`}>
+      <div className={`flex flex-col sm:flex-row gap-3 w-full sm:w-auto ${className}`}>
         {tabs.map((tab) => (
           <TabButton
             key={tab.id}

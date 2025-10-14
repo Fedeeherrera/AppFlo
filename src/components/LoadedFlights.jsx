@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Plane, Calendar, User, Clock, MapPin, Loader2, Search } from "lucide-react"
-import { useSupabaseData } from "../hooks/useSupabaseData"
+import { useCachedData } from "../hooks/useCachedData"
 import { useExport } from "../hooks/useExport"
 import {
   DataTable,
@@ -22,8 +22,8 @@ const LoadedFlights = ({ formatDate }) => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" })
   const [showFilters, setShowFilters] = useState(false)
 
-  // Hook para manejar datos de Supabase con filtros y ordenamiento
-  const { data: filteredFlights, originalData: flights, loading } = useSupabaseData(
+  // Hook para manejar datos con caché, filtros y ordenamiento
+  const { data: filteredFlights, originalData: flights, loading } = useCachedData(
     "flight_records",
     {
       filters,

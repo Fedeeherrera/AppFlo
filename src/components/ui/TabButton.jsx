@@ -8,16 +8,16 @@ const TabButton = ({
 }) => {
   const colorVariants = {
     blue: {
-      base: "bg-blue-500 hover:bg-blue-600",
-      active: "bg-blue-700"
+      base: "bg-slate-300 hover:bg-slate-400 text-slate-700 hover:text-slate-800",
+      active: "bg-blue-600 hover:bg-blue-700 text-white shadow-lg scale-105"
     },
     rose: {
-      base: "bg-rose-500 hover:bg-rose-600", 
-      active: "bg-rose-700"
+      base: "bg-slate-300 hover:bg-slate-400 text-slate-700 hover:text-slate-800", 
+      active: "bg-rose-600 hover:bg-rose-700 text-white shadow-lg scale-105"
     },
     green: {
-      base: "bg-green-500 hover:bg-green-600",
-      active: "bg-green-700"
+      base: "bg-slate-300 hover:bg-slate-400 text-slate-700 hover:text-slate-800",
+      active: "bg-green-600 hover:bg-green-700 text-white shadow-lg scale-105"
     }
   }
 
@@ -27,7 +27,7 @@ const TabButton = ({
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-4 py-2 text-white rounded-lg transition-colors ${buttonColor} ${className}`}
+      className={`flex items-center justify-center gap-2 px-6 py-3 rounded-lg transition-all duration-200 font-medium w-full sm:w-auto ${buttonColor} ${className}`}
     >
       {Icon && <Icon className="w-5 h-5" />}
       {label}

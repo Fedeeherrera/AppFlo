@@ -1,20 +1,31 @@
 import { supabase } from '../data/supabaseClient'
+import { useDataCache } from './useDataCache'
 import Swal from 'sweetalert2'
 
 export const useFuelSubmission = () => {
+  const { addRecord } = useDataCache()
+
   const submitFuel = async (values, { resetForm }) => {
     try {
-      const { error } = await supabase.from('fuel_records').insert([
-        {
-          fecha: values.fecha,
-          litros: Number(values.litros),
-          encargado: values.encargado,
-          lecturaSurtidor: values.lecturaSurtidor,
-          avion: values.avion,
-        },
-      ])
+      const newRecord = {
+        fecha: values.fecha,
+        litros: Number(values.litros),
+        encargado: values.encargado,
+        lecturaSurtidor: values.lecturaSurtidor,
+        avion: values.avion,
+        fechaDeCreacion: new Date().toISOString()
+      }
+
+      const { data, error } = await supabase
+        .from('fuel_records')
+        .insert([newRecord])
+        .select()
+        .single()
 
       if (error) throw error
+      
+      // Actualizar caché local inmediatamente
+      addRecord('fuel_records', data)
       
       Swal.fire({
         position: 'top-end',
